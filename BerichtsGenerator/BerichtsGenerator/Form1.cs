@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BerichtsGenerator.DL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -30,7 +31,33 @@ namespace BerichtsGenerator
 
         private void button1_Click(object sender, EventArgs e)
         {
+            bool failed = false;
+            try
+            {
+                List<Bericht> Berichte  = Program.ImportBuchungen(openFileDialog1.FileName,new Tuple<string, string>(textBox2.Text, textBox3.Text),textBox1.Text,textBox4.Text,Convert.ToInt32(numericUpDown1.Value));
+                foreach(Bericht tmpBericht in Berichte)
+                {
+                    tmpBericht.ExportAsFile();
+                }
+            }
+            catch (Exception ex)
+            {
+                failed = true;
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                if (!failed)
+                {
+                    MessageBox.Show("Berichte wurden erstellt", "Done");
+                }
+            }
+            //SaveSettings
+        }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //tryLoadSettings
         }
     }
 }
