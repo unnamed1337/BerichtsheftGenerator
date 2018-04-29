@@ -35,27 +35,59 @@ namespace BerichtsGenerator.DL
 
         public void ExportAsFile()
         {
-            string templatePath = "../../../../Bericht.xls";
-            string newFile = "Bericht_"+BerichtNr+".xls";
+            //string templatePath = "../../../../Bericht.xls";
+            string newFile = "Bericht_"+BerichtNr+".xlsx";
 
-            File.Copy(templatePath, newFile);
-            // copy Templae
+            var file = new FileInfo(newFile);
+            using (ExcelPackage excel = new ExcelPackage())
+            {
+                excel.Workbook.Worksheets.Add("Bericht "+BerichtNr);
+               
+                var excelWorksheet = excel.Workbook.Worksheets["Bericht " + BerichtNr];
 
-            //var fileinfo = new FileInfo(newFile);
-            //fileinfo = new FileInfo(templatePath);
-            //if (fileinfo.Exists)
-            //{
-            //    using (ExcelPackage p = new ExcelPackage(fileinfo))
-            //    {
-            //        ExcelWorksheet ws = p.Workbook.Worksheets.SingleOrDefault(x => x.Name == "Sheet1");
-            //        ws.Cells[9, 2].Value = Tagesbuchungen[0].Buchungen[0];
-            //        //ws.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            //        //ws.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
-            //        //ws.Cells[1, 1].Style.Font.Bold = true;
-            //        p.Save();
-            //    }
+                excelWorksheet.Column(1).Width = 25.25/2;
+                excelWorksheet.Column(2).Width = 18/2;
+                excelWorksheet.Column(3).Width = 14.96/2;
+                excelWorksheet.Column(4).Width = 31.34/2;
+                excelWorksheet.Column(5).Width = 26.07/2;
+                excelWorksheet.Column(6).Width = 31.91/2;
+                excelWorksheet.Column(7).Width = 21.64/2;
 
-            //}
+
+
+                excelWorksheet.Cells[1, 1].Value = "Name";
+                excelWorksheet.Cells[1, 2].Value = Verfasser.Item1;
+                excelWorksheet.Cells[2, 1].Value = "Vorname";
+                excelWorksheet.Cells[2, 2].Value = Verfasser.Item2;
+                excelWorksheet.Cells[4, 1].Value = "Ausbildungsberuf:";
+                excelWorksheet.Cells[5, 1].Value = Beruf;
+                
+                excelWorksheet.Cells[1, 1, 5, 2].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+                excelWorksheet.Cells[1, 4].Value = "Unternehmen";
+                excelWorksheet.Cells[3, 4].Value = Unternehmen;
+                excelWorksheet.Cells[1, 3, 5, 5].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+
+                excelWorksheet.Cells[1, 6].Value = "Ausbildungsjahr ";
+                excelWorksheet.Cells[2, 6].Value = "Bericht Nr.:";
+                excelWorksheet.Cells[2, 7].Value = BerichtNr.ToString();
+                excelWorksheet.Cells[4, 6].Value = "Datum";
+                excelWorksheet.Cells[1, 6, 5, 7].Style.Border.BorderAround(ExcelBorderStyle.Thin);
+
+
+
+
+                FileInfo excelFile = new FileInfo(newFile);
+                excel.SaveAs(excelFile);
+
+                bool isExcelInstalled = Type.GetTypeFromProgID("Excel.Application") != null ? true : false;
+                if (isExcelInstalled)
+                {
+                    System.Diagnostics.Process.Start(excelFile.ToString());
+                }
+            }
+
         }
     }
 }
