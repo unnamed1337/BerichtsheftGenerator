@@ -1,5 +1,9 @@
-﻿using System;
+﻿using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,7 +35,27 @@ namespace BerichtsGenerator.DL
 
         public void ExportAsFile()
         {
-            
+            string templatePath = "../../../../Bericht.xls";
+            string newFile = "Bericht_"+BerichtNr+".xls";
+
+            File.Copy(templatePath, newFile);
+            // copy Templae
+
+            //var fileinfo = new FileInfo(newFile);
+            //fileinfo = new FileInfo(templatePath);
+            //if (fileinfo.Exists)
+            //{
+            //    using (ExcelPackage p = new ExcelPackage(fileinfo))
+            //    {
+            //        ExcelWorksheet ws = p.Workbook.Worksheets.SingleOrDefault(x => x.Name == "Sheet1");
+            //        ws.Cells[9, 2].Value = Tagesbuchungen[0].Buchungen[0];
+            //        //ws.Cells[1, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+            //        //ws.Cells[1, 1].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(184, 204, 228));
+            //        //ws.Cells[1, 1].Style.Font.Bold = true;
+            //        p.Save();
+            //    }
+
+            //}
         }
     }
 }
