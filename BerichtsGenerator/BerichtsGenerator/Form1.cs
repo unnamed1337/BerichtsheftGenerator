@@ -57,6 +57,10 @@ namespace BerichtsGenerator
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            textBox1.Text = "Oevermann";
+            textBox2.Text = "Pascal";
+            textBox3.Text = "Gollnick";
+            textBox4.Text = "AE";
             //tryLoadSettings
         }
     }

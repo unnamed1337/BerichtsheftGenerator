@@ -52,7 +52,7 @@ namespace BerichtsGenerator
                 }
             }
             int count = berichtnr;
-            for(int i = 0; i <= AlleTage.Count - 5; i = i + 5)
+            for(int i = 0; i <= AlleTage.Count - 5; i = i + 4)
             {
                 List<Tag> tageTemp = new List<Tag>();
                 tageTemp.Add(AlleTage[i]);
